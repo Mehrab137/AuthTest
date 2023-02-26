@@ -14,7 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('landing');
+});
+Route::group(['namespace' => 'App\Http\Controllers'], function(){
+    Route::get('product-listing', 'ProductController@index')->name('customer.product.view');
 });
 
 Auth::routes();
@@ -22,10 +25,14 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-Route::prefix('/admin')->name('admin.')->group(function(){
+Route::group(['namespace' => 'App\Http\Controllers'], function(){
 
-    Route::get('/', [App\Http\Controllers\AdminController::class, 'index'])->name('index');
-    Route::get('/login', [App\Http\Controllers\Auth\AdminLoginController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [App\Http\Controllers\Auth\AdminLoginController::class, 'login'])->name('login.submit');
+    Route::group(['prefix' => '/admin'], function(){
+
+        Route::get('/', 'AdminController@index')->name('admin.index');
+        Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
+        Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
+    
+    });
     
 });
