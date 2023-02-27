@@ -32,6 +32,13 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
         Route::get('/', 'AdminController@index')->name('admin.index');
         Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
         Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
+
+        Route::get('/brand', 'AdminBrandController@viewBrandIndex')->name('admin.brand.index');
+        Route::post('/brand/add', 'AdminBrandController@storeBrand')->name('admin.brand.store');
+        Route::get('/brand/edit/{}', 'AdminBrandController@editBrand')->name('admin.brand.edit');
+        Route::post('/brand/update/{}', 'AdminBrandController@updateBrand')->name('admin.brand.update');
+        Route::post('/brand/delete/{}', 'AdminBrandController@deleteBrand')->name('admin.brand.delete');
+
     
     });
     
